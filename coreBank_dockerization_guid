@@ -1,0 +1,15 @@
+after developing for deploy as a container :
+
+mvn clean package // use it for create jar file
+java -jar target/zac-0.0.1.jar 
+// use it for expose your services and  test if jar file ok 
+
+in Dockerfile:
+	FROM openjdk:16-alpine3.13
+	MAINTAINER com.corebank.zac.main
+	COPY target/zac-0.0.1-SNAPSHOT.jar zac-0.0.1.jar
+	ENTRYPOINT ["java","-jar","/zac-0.0.1.jar"]
+
+
+docker build -t core.bank:latest .
+docker run -p8081:8081 core.bank:latest
