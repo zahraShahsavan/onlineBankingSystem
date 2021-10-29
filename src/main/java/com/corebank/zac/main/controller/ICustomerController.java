@@ -5,9 +5,9 @@ import com.corebank.zac.main.model.ECustomer;
 import java.util.List;
 
 public interface ICustomerController {
-    public ECustomer addCustomer(ECustomer customer);
+    public String addCustomer(ECustomer customer);
     public List<ECustomer> getCustomer(long id);
     public List<ECustomer> getCustomers();
-    public ECustomer updateCustomer(ECustomer customer) throws NoSuchFieldException;
-    public void deleteCustomer(long id);
+    public String updateCustomer(ECustomer customer) throws NoSuchFieldException;
+    public String deleteCustomer(long id);
 }

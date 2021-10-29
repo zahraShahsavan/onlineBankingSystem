@@ -19,14 +19,14 @@ public class EAccount {
     @JoinColumn(name = "CSTMR", nullable = false)
     private ECustomer customer;
 
-    @Column(nullable = false,name = "ACCNTAMT")
-    private long amount = 0;
+    @Column(name = "ACCNTAMT")
+    private long amount;
 
     @Override
     public String toString() {
         return "EAccount{" +
                 "aid=" + aid +
-                ", cif=" + customer.getCif()+
+                ", cif=" + customer+
                 ", amount=" + amount +
                 '}';
     }

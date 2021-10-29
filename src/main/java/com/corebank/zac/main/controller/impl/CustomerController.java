@@ -22,8 +22,10 @@ public class CustomerController implements ICustomerController {
 
     @GetMapping("/add")
     @Override
-    public ECustomer addCustomer(ECustomer customer) {
-        return customerRepo.save(customer);
+    public String addCustomer(ECustomer customer) {
+        ECustomer eCustomer = customerRepo.save(customer);
+        return "customer "+eCustomer.getCif()+" added.";
+
     }
 
     @GetMapping("/get")
@@ -43,18 +45,20 @@ public class CustomerController implements ICustomerController {
 
     @GetMapping("/update")
     @Override
-    public ECustomer updateCustomer(ECustomer customer){
+    public String updateCustomer(ECustomer customer){
         if (!customerRepo.existsById(customer.getCif()))
             throw new CustomerNotFoundException();
 
-        return customerRepo.save(customer);
+        ECustomer eCustomer = customerRepo.save(customer);
+        return "customer "+eCustomer.getCif()+" has just updated";
 
     }
 
     @GetMapping("/delete")
     @Override
-    public void deleteCustomer(long id) {
+    public String deleteCustomer(long id) {
         customerRepo.deleteById(id);
+        return "customer "+id+" deleted";
     }
 
 

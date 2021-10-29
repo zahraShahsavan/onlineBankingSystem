@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.List;
 
 import static com.googlecode.jmapper.api.JMapperAPI.attribute;
 import static com.googlecode.jmapper.api.JMapperAPI.mappedClass;
@@ -43,29 +44,28 @@ public class AccountController implements IAccountController {
 
     @GetMapping("/get")
     @Override
-    public EAccount getAccount( @RequestParam("id") Long id) {
-        if (id == null)
-            return null;
+    public List<EAccount> getAccount(@RequestParam("id") long id) {
 
         Iterable<EAccount> accounts = accountRepo.findAllById(Collections.singleton(id));
         if(accounts == null)
-            return new EAccount();
-        return accounts.iterator().next();
+            return (List<EAccount>) new EAccount();
+        return (List<EAccount>) accounts.iterator().next();
     }
 
     @GetMapping("/getList")
     @Override
-    public Iterable<EAccount> getAccounts() {
-        return accountRepo.findAll();
+    public List<EAccount> getAccounts() {
+        return (List<EAccount>) accountRepo.findAll();
     }
 
     @GetMapping("/update")
     @Override
-    public EAccount updateAccount(EAccount account){
+    public String updateAccount(EAccount account){
         if (!accountRepo.existsById(account.getAid()))
             throw new AccountNotFoundException();
-        System.out.println("test1");
-        return accountRepo.save(account);
+        account.setCustomer(customerRepo.findById(account.getCif()).get());
+        EAccount eAccount = accountRepo.save(account);
+        return "account "+ eAccount.getAid()+" has just updated";
     }
 
     @GetMapping("/delete")
